@@ -25,12 +25,15 @@ jobs:
 
             # 2. Update kode dari GitHub
             if [ ! -d ".git" ]; then
-              git clone https://github.com/${{ github.repository }}.git .
+              # Jika folder baru, clone langsung dari repo simple-vps-monitoring
+              git clone https://github.com/ngebenis/simple-vps-monitoring.git .
             else
+              # Jika folder sudah ada, pastikan remote URL-nya benar
+              git remote set-url origin https://github.com/ngebenis/simple-vps-monitoring.git
               git fetch origin main
               git reset --hard origin/main
             fi
-
+            
             # 3. Build Docker Image
             # Kita beri nama image 'vps-monitor-app'
             docker build -t vps-monitor-app .
