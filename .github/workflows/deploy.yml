@@ -50,5 +50,7 @@ jobs:
             docker run -d \
               --name vps-monitor-container \
               -p 3000:3000 \
+              --privileged \
+              -v /:/host:ro \
               --restart always \
               vps-monitor-app

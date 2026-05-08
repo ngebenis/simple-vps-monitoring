@@ -55,6 +55,15 @@
                 datasets: [{ data: [0, 100], backgroundColor: ['#00ff88', '#444'] }]
             }
         });
+        const diskCtx = document.getElementById('diskChart').getContext('2d');
+        const diskChart = new Chart(diskCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Used', 'Free'],
+                datasets: [{ data: [0, 100], backgroundColor: ['#ff4444', '#444'] }]
+            },
+            options: { cutout: '70%' }
+        });
 
         async function updateStats() {
             const res = await fetch('/api/stats');
@@ -77,6 +86,13 @@
 
             // Update Uptime
             document.getElementById('uptimeText').innerText = data.uptime;
+
+            // Update Disk
+            if (data.disk) {
+                document.getElementById('diskText').innerText = data.disk.percent.toFixed(2) + '%';
+                diskChart.data.datasets[0].data = [data.disk.percent, 100 - data.disk.percent];
+                diskChart.update();
+            }
         }
 
         setInterval(updateStats, 2000); // Update setiap 2 detik
