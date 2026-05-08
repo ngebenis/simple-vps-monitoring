@@ -49,6 +49,6 @@ jobs:
             # --restart always: otomatis jalan jika VPS reboot
             docker run -d \
               --name vps-monitor-container \
-              -p 3001:3000 \
+              -p 3000:3000 \
               --restart always \
               vps-monitor-app
